@@ -1,0 +1,4 @@
+pathlib==1.0.1
+PySide==1.2.4
+pysqlcipher==2.6.10
+SQLAlchemy==1.1.15
