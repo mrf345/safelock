@@ -313,7 +313,7 @@ class SafeLock(QWidget):
         font.setPointSize(13)
         font.setBold(True)
         font.setWeight(75)
-        self.fInst = QLabel('<center>| Double-click for about |</center>')
+        self.fInst = QLabel('<center>| Double-Click for about |</center>')
         self.mInst.setFont(font)
         ll.addWidget(self.mIcon)
         ll.addWidget(self.mInst)
@@ -440,13 +440,13 @@ class SafeLock(QWidget):
             self.mIcon.setEnabled(False)
             self.mInst.setEnabled(False)
             self.fInst.setText("<center>| Double-Click to cancel |</center>")
-            self.setToolTip("Double-click anywhere to cancel")
+            self.setToolTip("Double-Click anywhere to cancel")
         else:
             self.Processing = None
             self.setAcceptDrops(True)
             self.mIcon.setEnabled(True)
             self.mInst.setEnabled(True)
-            self.fInst.setText("<center>| Double-click for about |</center>")
+            self.fInst.setText("<center>| Double-Click for about |</center>")
             self.setToolTip(
                 "Just drag and drop any files or folders" +
                 " to ecrypt or a .sld file to decrypt")
