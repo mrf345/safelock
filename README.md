@@ -8,7 +8,7 @@
 
 ## Run it:
 #### `(With Python2.7) pip install requirements.txt && python run.py`
-
+#### ___ Tested only on GNU/Linux ___
 #  
 
 ![GUI](https://raw.githubusercontent.com/mrf345/safelock/master/images/gui.gif)
