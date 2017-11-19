@@ -1,6 +1,6 @@
 # Safelock 0.5
 
-![template](https://safe-lock.github.io/images/template.gif)
+![template](https://safe-lock.github.io/images/template.png)
 
 ### Simple drag & drop file encryption tool. based on python and uses PyCrypto to encrypt the inputted files with AES encryption. Then sqlite database file is generated with a unique key to store the encrypted files and folders in binary blobs for later decryption.
 
