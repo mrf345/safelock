@@ -1,5 +1,5 @@
 #!/bin/bash
-# Read me : this script will install safelock 0.1 requirements and your user into the
+# Read me : this script will install safelock 0.5 requirements and your user into the
 # printing group. this script only meant to be run once before you run FQM for
 # the first time
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -76,7 +76,7 @@ then
     echo "Error: must --install enviroment first .."
     exit 0
   fi
-  echo "##### Running safelock 0.1 #####"
+  echo "##### Running safelock 0.5 #####"
   if [ -f run.py ]
   then
     python run.py

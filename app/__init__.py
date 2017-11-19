@@ -7,193 +7,24 @@ from PySide.QtGui import QStatusBar, QProgressBar, QPushButton
 from PySide.QtGui import QVBoxLayout, QHBoxLayout, QFileDialog
 from PySide.QtGui import QDesktopWidget, QInputDialog, QLineEdit
 from PySide.QtGui import QIcon, QFont, QPixmap
-from PySide.QtCore import QThread, Qt, Signal, Slot, QEvent
+from PySide.QtCore import Qt, Slot, QEvent, QUrl
 from sys import exit, platform, argv
-from os import name, system, path, walk, remove
-from pathlib import Path
-from platform import system as sysname
+from os import name, system, path, remove
+from sys import platform as sysname
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, Binary
 from sqlalchemy.orm import sessionmaker
-from time import sleep
-
-
-class DecryptTH(QThread):
-    somesignal = Signal(object)
-
-    def __init__(self, path=None, db=[]):
-        QThread.__init__(self)
-        self.path = path
-        self.session = db[2]
-        self.File = db[3]
-        self.Folder = db[4]
-        self.estmf = self.session.query(self.Folder).count()
-        self.estm = self.session.query(self.File).count()
-        self.abo = None
-        self.err = None
-
-    def __del__(self):
-        self.quit()
-        self.terminate()
-
-    def run(self):
-        counter = 0
-        for f in self.session.query(self.Folder):
-            if self.abo is not None:
-                self.somesignal.emit("# Stop: got canceled")
-                self.err = True
-                break
-            try:
-                counter += 1
-                if not path.isdir(path.join(self.path, f.path)):
-                    Path(path.join(self.path, f.path)).mkdir(parents=True)
-                    self.somesignal.emit(
-                        str(counter) + '/' + str(self.estmf) + '/%')
-                    sleep(0.01)
-            except:
-                self.somesignal.emit("# Error: permissions or overwrite issue")
-                self.err = True
-                break
-        counter = 0
-        self.somesignal.emit('# Loading')
-        if self.err is not None:
-            return False
-        for f in self.session.query(self.File):
-            if self.abo is not None:
-                self.somesignal.emit("# Stop: got canceled")
-                self.err = True
-                break
-            try:
-                counter += 1
-                if f.f_id is None:
-                    ffp = path.join(self.path, f.name)
-                else:
-                    fol = self.session.query(
-                        self.Folder).filter_by(id=f.f_id).first()
-                    ffp = path.join(self.path, fol.path)
-                    ffp = path.join(ffp, f.name)
-                if path.isfile(ffp):
-                    remove(ffp)
-                with open(ffp, 'wb') as fil:
-                    fil.write(f.bb)
-                self.somesignal.emit(
-                    str(counter) + '/' + str(self.estm) + '/%')
-                sleep(0.1)
-            except:
-                self.somesignal.emit("# Error: permissions or overwrite issue")
-                self.err = True
-                break
-        if self.err is None:
-            self.somesignal.emit("# Done: all decrypted")
-
-    def stop(self):
-        self.abo = True
-        return True
-
-
-class EncryptTH(QThread):
-    somesignal = Signal(object)
-
-    def __init__(self, inp=[], db=[]):
-        QThread.__init__(self)
-        self.inp = inp
-        self.session = db[2]
-        self.File = db[3]
-        self.Folder = db[4]
-        self.estm = 0
-        for p in self.inp:
-            if path.isdir(p):
-                for sd, d, f in walk(p):
-                    for fd in f:
-                        if path.isfile(path.join(sd, fd)):
-                            self.estm += 1
-            else:
-                self.estm += 1
-            self.somesignal.emit("%% Loading files : " + str(self.estm))
-        self.abo = None
-        self.err = None
-
-    def __del__(self):
-        self.quit()
-        self.terminate()
-
-    def run(self):
-        def torp(r, rp):
-            return path.join(
-                path.basename(r),
-                rp).replace(
-                    r.replace(path.basename(r), ''), '')
-        counter = 0
-        for mainf in self.inp:
-            if self.abo is not None:
-                self.somesignal.emit("# Stop: got canceled")
-                self.err = True
-                break
-            if self.err is not None:
-                break
-            if path.isdir(mainf):
-                self.session.add(self.Folder(path.basename(mainf)))
-                for sd, d, ff in walk(mainf):
-                    if self.abo is not None:
-                        self.somesignal.emit("# Stop: got canceled")
-                        self.err = True
-                        break
-                    for fff in ff:
-                        try:
-                            counter += 1
-                            cdd = self.session.query(
-                                self.Folder).filter_by(
-                                    path=torp(mainf, sd)).first()
-                            if cdd is None:
-                                self.session.add(self.Folder(torp(mainf, sd)))
-                            cdd = self.session.query(
-                                self.Folder).filter_by(
-                                    path=torp(mainf, sd)).first()
-                            with open(path.join(sd, fff), 'rb') as of:
-                                self.session.add(self.File(fff,
-                                                           cdd.id,
-                                                           of.read()))
-                            self.session.commit()
-                            self.somesignal.emit(str(counter) + '/' +
-                                                 str(self.estm) + '/%')
-                        except:
-                            self.somesignal.emit(
-                                '# Error: too large or inaccessible file')
-                            self.err = True
-                            break
-            elif path.isfile(mainf):
-                counter += 1
-                try:
-                    with open(mainf, 'rb') as of:
-                        self.session.add(self.File(
-                            path.basename(mainf), None, of.read()))
-                    self.session.commit()
-                    self.somesignal.emit(str(counter) + '/' +
-                                         str(self.estm) + '/%')
-                except:
-                    self.somesignal.emit(
-                        '# Error: too large or inaccessible file')
-                    self.err = True
-                    break
-            else:
-                self.somesignal.emit(
-                    "# Error: something bad went wrong")
-                self.err = True
-                break
-        if self.err is None:
-            self.somesignal.emit("# Done: all encrypted")
-
-    def stop(self):
-        self.abo = True
-        return True
+from threads import EncryptTH, DecryptTH
+from ex_functions import encryptit, isenct, r_path
+from hashlib import sha256
 
 
 class SafeLock(QWidget):
     def __init__(self):
         super(SafeLock, self).__init__()
         main_layout = QVBoxLayout(self)
-        self.Version = '0.1 beta'
+        self.Version = '0.5 beta'
         self.s_error = "QStatusBar{color:red;font-weight:1000;}"
         self.s_loop = "QStatusBar{color:black;font-weight:1000;}"
         self.s_norm = "QStatusBar{color:blue;font-style:italic;"
@@ -201,12 +32,14 @@ class SafeLock(QWidget):
         self.Processing = None
         self.CP = None
         self.PPbar = None
+        self.key = None
         self.DFiles = []
-        self.picon = "images/favicon.png"
-        self.plogo = "images/logo.png"
+
+        self.picon = r_path("images/favicon.png")
+        self.plogo = r_path("images/logo.png")
         if name == 'nt':
-            self.picon = "images\\favicon.png"
-            self.plogo = "images\\logo.png"
+            self.picon = r_path("images\\favicon.png")
+            self.plogo = r_path("images\\logo.png")
         self.icon = QIcon(self.picon)
         self.logo = QIcon(self.plogo)
         self.center()
@@ -216,8 +49,7 @@ class SafeLock(QWidget):
         self.show()
 
     def db(self, password="password", dbname="untitled.sld", dc=True):
-        eng = create_engine("sqlite+pysqlcipher://:%s@/%s" % (password,
-                                                              dbname),
+        eng = create_engine("sqlite:///%s" % dbname,
                             connect_args={'check_same_thread': False})
         Base = declarative_base(bind=eng)
         Session = sessionmaker(bind=eng)
@@ -226,11 +58,13 @@ class SafeLock(QWidget):
         class Identifier(Base):
             __tablename__ = "identifier"
             id = Column(Integer, primary_key=True)
-            version = Column(String)
+            version = Column(Binary)
+            kvd = Column(Binary)
 
-            def __init__(self, version):
+            def __init__(self, version, kvd):
                 self.id = 0
                 self.version = version
+                self.kvd = kvd
 
         class Folder(Base):
             __tablename__ = 'folders'
@@ -253,31 +87,22 @@ class SafeLock(QWidget):
                 self.bb = bb
         if dc:
             Base.metadata.create_all()
-            session.add(Identifier(self.Version))
+            enc = encryptit(sha256(self.Version).digest(),
+                            sha256(password).digest())
+            session.add(Identifier(enc[0], enc[1]))
             session.commit()
 
-        return [eng, Base, session, File, Folder, Identifier]
+        return [eng, Base, session, File, Folder, Identifier, password]
 
     def checkP(self, db):
         try:
-            d = db[2].query(db[3]).first()
+            d = db[2].query(db[5]).filter_by(id=0).first()
             if d is not None:
-                return True
+                if isenct(self.Version, d.version, db[6], d.kvd):
+                    return True
         except:
             pass
         return False
-
-    def checkL(self, db):
-        try:
-            d = db[2].query(db[5]).filter_by(id=0).first()
-            if d is None:
-                return False
-            else:
-                if d.version != self.Version:
-                    return False
-        except:
-            return False
-        return True
 
     def setStyle(self):
         self.setMaximumWidth(410)
@@ -349,14 +174,20 @@ class SafeLock(QWidget):
             tm = fname.split('.')
             tm = tm[len(tm) - 1]
             if tm == "sld":
-                if path.isfile(fname):
-                    remove(fname)
+                try:
+                    if path.isfile(fname):
+                        remove(fname)
+                except:
+                    pass
                 return fname
         if len(fname) <= 0:
             return None
         fname += ".sld"
-        if path.isfile(fname):
-            remove(fname)
+        try:
+            if path.isfile(fname):
+                remove(fname)
+        except:
+            pass
         return fname
 
     def extTo(self, fl):
@@ -385,8 +216,8 @@ class SafeLock(QWidget):
         Amsg += ", This work is a free, open-source project licensed "
         Amsg += " under Mozilla Public License version 2.0 . <br><br>"
         Amsg += " visit for more info or report:<br> "
-        Amsg += "<b><a href='https://github.com/mrf345/safelock'> "
-        Amsg += "https://github.com/ </a> </b></center>"
+        Amsg += "<b><a href='https://safe-lock.github.io'> "
+        Amsg += "https://safe-lock.github.io/ </a> </b></center>"
         QMessageBox.about(self,
                           "About",
                           Amsg
@@ -420,7 +251,7 @@ class SafeLock(QWidget):
             self.DFiles = []
             for url in e.mimeData().urls():
                 try:
-                    if sysname == 'Darwin':
+                    if sysname == 'darwin':
                         from Foundation import NSURL
                         fname = NSURL.URLWithString_(
                             url.toString()).filePathURL().path()
@@ -468,13 +299,10 @@ class SafeLock(QWidget):
                         return False
                     elif not pw:
                         return False
-                    if not self.checkP(self.db(pw, files[0],
+                    if not self.checkP(self.db(sha256(pw).digest(), files[0],
                                                dc=False)):
                         self.errorMsg(
                             "Wrong password entered, try again.")
-                        return False
-                    if not self.checkL(self.db(pw, files[0], dc=False)):
-                        self.errorMsg("Wrong or incompatible .sld file.")
                         return False
                     else:
                         fold = self.extTo(tpp(files[0]))
@@ -483,7 +311,8 @@ class SafeLock(QWidget):
                             self.in_loop()
                             self.P = DecryptTH(fold, self.db(pw,
                                                              files[0],
-                                                             dc=False))
+                                                             dc=False),
+                                               sha256(pw).digest())
                             self.P.start()
                             self.P.somesignal.connect(self.handleStatusMessage)
                             self.P.setTerminationEnabled(True)
@@ -496,9 +325,15 @@ class SafeLock(QWidget):
             else:
                 fil = self.saveFile(tpp(files[0]))
                 if fil is not None:
+                    if path.isfile(fil):
+                        try:
+                            remove(fil)
+                        except:
+                            pass
                     self.CP = fil
                     self.in_loop()
-                    self.P = EncryptTH(files, self.db(pw, fil))
+                    self.P = EncryptTH(files, self.db(pw, fil),
+                                       sha256(pw).digest())
                     self.P.start()
                     self.P.somesignal.connect(self.handleStatusMessage)
                     self.P.setTerminationEnabled(True)
@@ -536,7 +371,7 @@ class SafeLock(QWidget):
             elif message == "# Loading":
                 self.setCursor(Qt.BusyCursor)
                 self.statusb.setStyleSheet(self.s_norm)
-            self.setWindowTitle('safelock 0.1 beta')
+            self.setWindowTitle('safelock ' + self.Version)
             self.statusb.showMessage(message)
 
     def mousePressEvent(self, event):
@@ -574,17 +409,23 @@ class SafeLock(QWidget):
                     event.ignore()
         else:
             if self.CP is not None:
-                if path.isfile(self.CP + '-journal'):
-                    remove(self.CP + '-journal')
+                try:
+                    if path.isfile(self.CP + '-journal'):
+                        remove(self.CP + '-journal')
+                except:
+                    pass
             if event is not None:
                 event.accept()
 
     def cleanup(self):
         if self.CP is not None:
-            if path.isfile(self.CP + '-journal'):
-                remove(self.CP + '-journal')
-            if path.isfile(self.CP):
-                remove(self.CP)
+            try:
+                if path.isfile(self.CP + '-journal'):
+                    remove(self.CP + '-journal')
+                if path.isfile(self.CP):
+                        remove(self.CP)
+            except:
+                pass
 
 
 def gui():

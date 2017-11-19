@@ -1,14 +1,16 @@
-# Safelock 0.1
+# Safelock 0.5
 
 ![template](https://raw.githubusercontent.com/mrf345/safelock/master/images/template.png)
 
-### Simple drag & drop file encryption tool. based on python and uses [sqlcipher][d3f92ee5] (encrypted extension of sqlite) as an encrypted database, in-which files and folders are stored in binary blobs and extracted from, whenever decrypted.
+### Simple drag & drop file encryption tool. based on python and uses PyCrypto to encrypt the inputted files with AES encryption. Then sqlite database file is generated with a unique key to store the encrypted files and folders in binary blobs for later decryption.
 
-  [d3f92ee5]: https://github.com/sqlcipher/sqlcipher "sqlcipher"
 
 ## Run it:
 #### `(With Python2.7) pip install requirements.txt && python run.py`
-#### ___ Tested only on GNU/Linux ___
+#### compatible with major operating systems GNU/Linux, Windows and Mac
+##### [_If you're on Mac OS X take a look at requirement.txt_][f5062496]
 #  
+
+  [f5062496]: https://github.com/mrf345/safelock/blob/master/requirements.txt "requirements.txt"
 
 ![GUI](https://raw.githubusercontent.com/mrf345/safelock/master/images/gui.gif)
