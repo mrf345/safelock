@@ -1,13 +1,9 @@
 <p align='center'>
-  <img width='25%' src='https://mrf345.github.io/images/logo_s.png' />
+  <img width='30%' src='https://mrf345.github.io/images/logo_s.png' />
 </p>
 
 <h3 align='center'> Simple drag & drop files encryption tool. based on python and uses PyCrypto to encrypt the inputted files with AES encryption, Then <mark>.sld</mark> SQLite database file is generated with a unique key to store the encrypted files and folders in binary blobs for later decryption. </h3>
 <hr />
-
-<p align='center'>
-  <img width='75%' src='https://mrf345.github.io/images/template_s.png' />
-</p>
 
 ## Setup:
 #### - From the source:
@@ -16,7 +12,8 @@
 > - `pip2.7 install -r requirements.txt` <br />
 > - `python2.7 run.py` <br /> <br />
 > [_If you're on Mac OS X take a look at requirement.txt_][f5062496]
-  [f5062496]: https://github.com/mrf345/safelock/blob/master/requirements.txt "requirements.txt"
+
+[f5062496]: https://github.com/mrf345/safelock/blob/master/requirements.txt "requirements.txt"
 
 #### - With executable:
 > You can get an executable that's suitable to your OS from : <br />
