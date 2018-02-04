@@ -28,7 +28,7 @@
 
   [30bd8c2e]: https://eli.thegreenplace.net/2010/06/25/aes-encryption-of-files-in-python-with-pycrypto "PyCrypto blog"
 
-
+<br />
 <p align='center'>
 <img width='40%' src='https://mrf345.github.io/images/gui_s.gif' />
 </p>
