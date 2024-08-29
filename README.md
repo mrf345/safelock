@@ -1,5 +1,13 @@
 <p align='center'>
-  <img width='10%' src='docs/logo.webp' />
+  <img width='24%' src='docs/logo.webp' />
+</p>
+
+<p align='center'>
+  <a href='https://github.com/mrf345/safelock/actions/workflows/ci.yml'>
+    <img src='https://github.com/mrf345/safelock/workflows/Build/badge.svg'>
+  </a>
+  <img alt="Static Badge" src="https://img.shields.io/badge/OS-_Linux_%7C_Windows_%7C_MacOS-blue">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Arch-_amd64_%7C_arm64-black">
 </p>
 
 <p align='center'>
