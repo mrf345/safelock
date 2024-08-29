@@ -1,4 +1,4 @@
-module goodstuff
+module safelock
 
 go 1.22
 
