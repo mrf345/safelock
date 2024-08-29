@@ -1,0 +1,6 @@
+@import "../../../styles/variables";
+
+.container {
+    animation: $trans-animation;
+    animation-duration: $slower-trans-duration;
+}

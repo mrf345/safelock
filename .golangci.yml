@@ -1,0 +1,5 @@
+run:
+  concurrency: 0
+linters:
+  enable:
+    - lll

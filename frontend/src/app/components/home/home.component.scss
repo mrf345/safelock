@@ -1,0 +1,47 @@
+@import "../../../styles/images";
+@import "../../../styles/variables";
+
+.container {
+    animation: $trans-animation;
+    animation-duration: $trans-duration;
+
+    .logo {
+        max-width: 13rem;
+        content: $logo;
+    }
+
+    .input-group {
+        max-width: 80%;
+    }
+
+    .password {
+        input, #pass-addon {
+            max-height: 40px;
+        }
+
+        button {
+            max-height: 20px;
+            max-width: 70px;
+            min-width: 70px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+
+            &:first-child {
+                border-bottom: 0;
+            }
+        }
+    }
+
+    .progress {
+        height: 80%;
+
+        .progress-bar {
+            color: $light-color;
+            background-color: $dark-gray-color;
+        }
+    }
+
+    .cancel {
+        font-size: 0.7rem;
+    }
+}

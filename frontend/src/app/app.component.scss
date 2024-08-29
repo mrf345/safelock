@@ -1,0 +1,11 @@
+@import "../styles/variables";
+
+.header {
+    animation: $trans-animation;
+    animation-duration: $trans-duration;
+
+    button {
+        max-height: 2.1em;
+        padding: 0.3rem;
+    }
+}

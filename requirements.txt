@@ -1,6 +1,0 @@
-pathlib==1.0.1
-pycrypto==2.6.1
-PySide==1.2.4
-SQLAlchemy==1.1.15
-# on MacOS
-# pyobjc==4.0

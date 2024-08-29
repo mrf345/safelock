@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "safelock",
+  "outputfilename": "safelock",
+  "frontend:build": "npx ng build --c production",
+  "frontend:install": "npm install",
+  "frontend:dev:watcher": "npx ng serve",
+  "frontend:dev:serverUrl": "http://localhost:4200",
+  "author": {
+    "name": "Mohamed Feddad",
+    "email": "mrf345@gmail.com"
+  }
+}

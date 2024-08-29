@@ -1,0 +1,65 @@
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/images';
+
+body {
+    height: 100%;
+    overflow: hidden;
+    background-color: $light-color;
+
+    @include transition(background-color $trans-duration linear);
+
+    ng-icon {
+        color: $dark-gray-color;
+        min-width: $icon-size;
+        min-height: $icon-size;
+        
+        svg {
+            min-width: $icon-size;
+            min-height: $icon-size;
+        }
+    }
+}
+
+.in-dark-theme {
+    background-color: $dark-color;
+    color: $light-color !important;
+
+    ng-icon, .text-muted {
+        color: $light-color !important;
+    }
+
+    a {
+        color: $light-link-color;
+    }
+
+    input, .input-group-text {
+        background-color: $dark-color !important;
+        border-color: $light-color !important;
+        color: $light-color !important;
+
+        &::placeholder {
+            color: $light-color !important;
+        }
+    }
+
+    input.is-valid {
+        background-image: $valid-icon;
+    }
+
+    input.is-invalid {
+        background-image: $invalid-icon;
+    }
+
+    .progress {
+        background-color: $dark-color;
+        border-color: $light-color !important;
+        border: 0.8px solid $light-color;
+    }
+
+    .invalid-feedback {
+        color: $light-color;
+    }
+}

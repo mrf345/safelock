@@ -1,0 +1,11 @@
+<div class="container d-flex flex-column align-items-center mt-5 pt-2 user-select-none">
+  <h1 class="text text-muted pe-none">Safelock version {{ linkService.appVersion$ | async }}</h1>
+  <p class="text text-muted text-center mt-3 p-1 pe-none">
+    This is a free open-source project licensed <br/>
+    under Mozilla Public License version 2.0. For any questions,
+    future updates or bug reports please visit
+  </p>
+  <a (click)="linkService.openUrl('https://github.com/mrf345/safelock')" href="javascript:;">
+    github.com/mrf345/safelock/
+  </a>
+</div>

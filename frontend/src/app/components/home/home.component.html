@@ -1,0 +1,97 @@
+<!-- eslint-disable @angular-eslint/template/no-autofocus -->
+
+<div
+ *ngIf="taskService.task$ | async as task"
+ (dblclick)="cancelTask()"
+ [style.cursor]="(task.inProgress$ | async) ? 'pointer' : 'default'"
+ class="container d-flex flex-column align-items-center"
+>
+    <img
+     [class.pe-none]="task.noProgress$ | async"
+     class="logo img-fluid user-select-none"
+     alt="logo"
+     draggable="false"
+    />
+
+    <div
+     *ngIf="task.notCreated$ | async"
+     class="intro text-center user-select-none pe-none"
+     data-access="home"
+    >
+        <h6 class="text text-muted">
+            Darg and drop <strong>files</strong> and <strong>folders</strong> to encrypt
+        </h6>
+        <h6 class="text text-muted">
+            Or drag and drop <strong>.sla</strong> file to decrypt
+        </h6>
+    </div>
+
+    <ng-container *ngIf="task.isCreated$ | async">
+        <div
+         *ngIf="task.isRunning$ | async"
+         class="w-75 user-select-none"
+         data-access="processing"
+         [class.no-pa]="task.noProgress$ | async"
+        >
+            <h6 class="text text-muted text-center">
+                {{ task.status$ | async }}
+            </h6>
+            <div class="progress">
+                <div
+                 [style.width]="(task.percent$ | async) + '%'"
+                 [class.progress-bar-animated]="task.inProgress$ | async"
+                 class="progress-bar progress-bar-striped fw-bolder text-center"
+                 role="progressbar"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                >
+                    {{ task.percent$ | async }}%
+                </div>
+            </div>
+            <p
+             *ngIf="task.kind$ | async"
+             class="cancel text text-muted text-center mt-2 font-monospace"
+            >
+                (double click to cancel {{ (task.kind$ | async) + 'ion' }})
+            </p>
+        </div>
+
+        <div
+         *ngIf="task.notRunning$ | async"
+         class="password input-group mt-2"
+         data-access="password"
+        >
+            <input
+             [formControl]="password"
+             [class.is-invalid]="!password.valid"
+             [class.is-valid]="password.valid"
+             (keydown.enter)="runTask()"
+             type="password"
+             class="form-control"
+             placeholder="Password"
+             aria-label="Password"
+             aria-describedby="pass-addon"
+             autofocus
+            />
+            <div id="pass-addon">
+                <button
+                 (click)="runTask()"
+                 class="input-group-text btn-sm text-capitalize"
+                 data-access="run-task-btn"
+                >
+                    {{ task.kind$ | async }}
+                </button>
+                <button
+                 (click)="cancelTask()"
+                 class="input-group-text btn-sm text-capitalize"
+                 data-access="cancel-task-btn"
+                >
+                    Cancel
+                </button>
+            </div>
+            <div class="invalid-feedback">
+                Requires a minimum of 8 characters
+            </div>
+        </div>
+    </ng-container>
+</div>
