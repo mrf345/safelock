@@ -1,34 +1,49 @@
 <p align='center'>
-  <img width='30%' src='https://mrf345.github.io/images/logo_s.png' />
+  <img width='24%' src='docs/logo.webp' />
 </p>
 
-<h3 align='center'> Simple drag & drop files encryption tool. based on python and uses PyCrypto to encrypt the inputted files with AES encryption, Then <mark>.sld</mark> SQLite database file is generated with a unique key to store the encrypted files and folders in binary blobs for later decryption. </h3>
+<p align='center'>
+  <a href='https://github.com/mrf345/safelock/actions/workflows/ci.yml'>
+    <img src='https://github.com/mrf345/safelock/workflows/Build/badge.svg'>
+  </a>
+  <img alt="Static Badge" src="https://img.shields.io/badge/OS-_Linux_%7C_Windows_%7C_MacOS-blue">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Arch-_amd64_%7C_arm64-black">
+</p>
+
+<p align='center'>
+  Fast drag & drop cross-platform files encryption tool, based on <a href="https://github.com/mrf345/safelock-cli" target="_blank">safelock-cli</a> and built with
+  <a href="https://github.com/wailsapp/wails" target="_blank">Wails</a> and <a href="https://github.com/angular/angular" target="_blank">Angular</a>.
+</p>
+
 <hr />
 
-## Setup:
-#### - From the source:
-> - `git clone https://github.com/mrf345/safelock` <br />
-> - `cd safelock` <br />
-> - `pip2.7 install -r requirements.txt` <br />
-> - `python2.7 run.py` <br /> <br />
-> [_If you're on Mac OS X take a look at requirement.txt_][f5062496]
+### Install
 
-[f5062496]: https://github.com/mrf345/safelock/blob/master/requirements.txt "requirements.txt"
+With the [Go](https://go.dev/) package manager
 
-#### - With executable:
-> You can get an executable that's suitable to your OS from : <br />
-> - [Sourceforge][46a7f7e8]
-> - [Softpedia][8dbfe847]
+```shell
+go install https://github.com/mrf345/safelock
+```
 
-  [46a7f7e8]: https://sourceforge.net/projects/safelock/ "Sourceforge"
-  [8dbfe847]: http://www.softpedia.com/get/Security/Encrypting/Safelock.shtml "Softpedia"
+Or using one of the latest compiled binaries [here](https://github.com/mrf345/safelock/releases)
 
-## Credit:
-> - [Blog][30bd8c2e] that inspired this tool.
 
-  [30bd8c2e]: https://eli.thegreenplace.net/2010/06/25/aes-encryption-of-files-in-python-with-pycrypto "PyCrypto blog"
+### Changelog
 
-<br />
-<p align='center'>
-<img width='40%' src='https://mrf345.github.io/images/gui_s.gif' />
-</p>
+##### v1.0.0
+
+Should expect great improvement in performance (~6x) when compared to the last release 0.0.5, better overall encryption and cross-platform support.
+
+Unfortunately this version breaks backward compatibility. Any files encrypted with a prior version can't be decrypted with this version, and vice versa.
+
+### Development
+
+- *Run tests*: `make test`
+- *Run style check*: `make lint`
+- *Compile binary*: `make pkg`
+
+
+### Demo
+
+![Demo](docs/demo.gif)
+
