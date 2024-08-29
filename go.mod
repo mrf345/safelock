@@ -2,8 +2,6 @@ module safelock
 
 go 1.22
 
-toolchain go1.23.0
-
 require (
 	github.com/google/uuid v1.3.0
 	github.com/mrf345/desktop-entry v0.0.3
