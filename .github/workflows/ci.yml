@@ -3,42 +3,46 @@ name: Build
 on: [push]
 
 jobs:
-  build:
+  backend-build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         go: [stable]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache-dependency-path: go.sum
+      - name: Install dependencies
+        run: go get .
+      - name: Lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59
+      - name: Test
+        run: go test -count=2 ./...
 
-    jobs:
-      Backend:
-        steps:
-          - uses: actions/checkout@v4
-          - uses: actions/setup-go@v5
-            with:
-              go-version: '1.22'
-              cache-dependency-path: |
-                 go.sum
-          - name: Install dependencies
-            run: go get .
-          - name: Lint
-            uses: golangci/golangci-lint-action@v6
-            with:
-              version: v1.59
-          - name: Test backend
-            run: go test -count=2 ./...
-
-      Frontend:
-        steps:
-          - uses: actions/checkout@v4
-          - uses: actions/setup-node@v4
-            with:
-              node-version: '20.8.0'
-              cache: 'npm'
-              cache-dependency-path: frontend/package-lock.json
-          - name: Install dependencies
-            run: npm --prefix frontend i
-          - name: Lint
-            run: npm --prefix frontend run lint
-          - name: Test
-            run: npm --prefix frontend test
+  frontend-build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go: [stable]
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.8.0'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm i
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
