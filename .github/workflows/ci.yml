@@ -17,7 +17,11 @@ jobs:
           cache-dependency-path: go.sum
       - name: Install dependencies
         run: go get .
-      - name: Test backend
+      - name: Lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59
+      - name: Test
         run: go test -count=2 ./...
 
   frontend-build:
