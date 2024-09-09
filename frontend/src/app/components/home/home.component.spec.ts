@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 
-import * as app from '../../../../wailsjs/go/main/App';
+import * as app from '../../../../wailsjs/go/backend/App';
 import { LinkService } from '../../services/link.service';
 import { TestHelper } from '../../index.spec';
 
