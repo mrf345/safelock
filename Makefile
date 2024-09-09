@@ -1,15 +1,12 @@
 v ?= 1.0.0
 
-pkg-all:
+pkg-some:
 	wails build -platform windows/amd64,windows/arm64,linux/amd64
-	CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o build/bin/safelock-linux-arm64
 	upx --best\
 		build/bin/safelock-linux-amd64\
-		build/bin/safelock-linux-arm64\
-		build/bin/safelock-windows-amd64\
-		build/bin/safelock-window-arm46
+		build/bin/safelock-amd64.exe\
+		build/bin/safelock-arm64.exe
 
-# NOTE: name of the binary needs to be {name}-{version} on linux for desktop entry
 pkg:
 	wails build -platform linux/amd64 -o safelock-$(v)
 	upx build/bin/safelock-$(v)
@@ -17,6 +14,9 @@ pkg:
 test:
 	go test ./... -count=2
 	npm --prefix frontend test
+
+test-fe:
+	npm --prefix frontend run test:watch
 
 lint:
 	golangci-lint run
