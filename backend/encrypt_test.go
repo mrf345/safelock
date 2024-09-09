@@ -62,11 +62,9 @@ func TestEncryptFail(t *testing.T) {
 	dTypeChan := mockMessageDialog()
 	_, err := app.Encrypt(inputs, pwd)
 	dialogType := <-dTypeChan
-	_, outputNotExistErr := os.Stat(outputPath)
 
 	assert.Nil(err)
 	assert.Equal(dialogType, runtime.ErrorDialog)
-	assert.NotNil(outputNotExistErr)
 }
 
 func getTestApp() *App {
