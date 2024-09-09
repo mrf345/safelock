@@ -19,7 +19,9 @@
 
 ### Install
 
-- ##### Linux
+<details>
+<summary><h5>Linux</h5></summary>
+
   - With `amd64` binary
 
   ```bash
@@ -42,14 +44,19 @@
     cd safelock
     wails dev
     ```
-
-- ##### Windows
+</details>
+<details>
+<summary><h5>Windows</h5></summary>
 
   Download, extract and install [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-amd64.zip) or run [this portable version](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-portable-amd64.zip).
 
-- ##### MacOS
+</details>
+<details>
+<summary><h5>MacOS</h5></summary>
 
   Download and extract [this universal .app](https://github.com/mrf345/safelock/releases/latest/download/safelock-darwin-universal.zip), Note that you'll need to enable installing apps from unknown developers follow [this guide](https://www.wikihow.com/Install-Software-from-Unsigned-Developers-on-a-Mac).
+
+</details>
 
 
 ### Performance
@@ -71,8 +78,6 @@ Should expect great improvement in performance (about **23.2** times faster) com
 
 However, this version **breaks backward compatibility**. Any files encrypted with a prior versions can't be decrypted with this version, and vice versa.
 
-<p align="center" style="margin-top: 60px;">
-  <a href="https://raw.githubusercontent.com/mrf345/safelock/master/docs/demo.gif" target="_blank">
-    <img src="docs/demo.gif" alt="demo" />
-  </a>
-</p>
+<a style="margin-top: 60px;" href="https://raw.githubusercontent.com/mrf345/safelock/master/docs/demo.gif" target="_blank">
+  <img src="docs/demo.gif" alt="demo" />
+</a>
