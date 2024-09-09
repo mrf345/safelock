@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { filter, mergeMap, Subscription, zip } from 'rxjs';
@@ -23,6 +23,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       ],
       updateOn: 'change',
   });
+
+  @ViewChild('passwordInput', {}) set passwordInput(input: ElementRef) {
+    if (input) input.nativeElement.focus();
+  }
 
   constructor(
     readonly linkService: LinkService,

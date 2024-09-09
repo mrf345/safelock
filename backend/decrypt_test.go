@@ -1,4 +1,4 @@
-package main
+package backend
 
 import (
 	"context"
@@ -25,8 +25,8 @@ func TestDecrypt(t *testing.T) {
 	assert := assert.New(t)
 	app := getTestApp()
 	pwd := "123456789"
-	tempDir, encErr := os.MkdirTemp("", "sl_test_output")
-	inputPath, outputPath, _ := getEncryptedPath(tempDir, pwd)
+	tempDir, _ := os.MkdirTemp("", "sl_test_output")
+	inputPath, outputPath, encErr := getEncryptedPath(tempDir, pwd)
 	defer os.RemoveAll(tempDir)
 
 	assert.Nil(encErr)
@@ -47,8 +47,8 @@ func TestDecryptFail(t *testing.T) {
 	assert := assert.New(t)
 	app := getTestApp()
 	pwd := "123456789"
-	tempDir, encErr := os.MkdirTemp("", "sl_test_output")
-	inputPath, outputPath, _ := getEncryptedPath(tempDir, pwd)
+	tempDir, _ := os.MkdirTemp("", "sl_test_output")
+	inputPath, outputPath, encErr := getEncryptedPath(tempDir, pwd)
 	defer os.RemoveAll(tempDir)
 
 	assert.Nil(encErr)
@@ -65,14 +65,27 @@ func TestDecryptFail(t *testing.T) {
 	assert.NotNil(outputNotExistErr)
 }
 
-func getEncryptedPath(dir, pwd string) (string, string, error) {
-	outputPath := filepath.Join(dir, "e.sla")
-	inputPath := filepath.Join(dir, "test.txt")
-	_ = os.WriteFile(inputPath, []byte("testing"), 0776)
+func getEncryptedPath(dir, pwd string) (inputPath, outputPath string, err error) {
+	var outputFile *os.File
+
+	if outputFile, err = os.CreateTemp(dir, "e.sla"); err != nil {
+		return
+	}
+
+	outputPath = outputFile.Name()
+	inputPath = filepath.Join(dir, "test.txt")
+
+	if err = os.WriteFile(inputPath, []byte("testing"), 0776); err != nil {
+		return
+	}
+
 	ctx := context.TODO()
-	err := safelock.New().Encrypt(ctx, []string{inputPath}, outputPath, pwd)
+	if err = safelock.New().Encrypt(ctx, []string{inputPath}, outputFile, pwd); err != nil {
+		panic(err)
+	}
+
 	os.Remove(inputPath)
-	return inputPath, outputPath, err
+	return
 }
 
 func mockOpenDirectoryDialog(path string, err error) {

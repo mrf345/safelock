@@ -19,31 +19,60 @@
 
 ### Install
 
-With the [Go](https://go.dev/) package manager
+- ##### Linux
+  - With `amd64` binary
 
-```shell
-go install https://github.com/mrf345/safelock
-```
+  ```bash
+  wget -qO- https://github.com/mrf345/safelock/releases/latest/download/safelock-linux-amd64.tar.gz | tar xvz -C ~ && ~/safelock
+  ```
 
-Or using one of the latest compiled binaries [here](https://github.com/mrf345/safelock/releases)
+  - With `arm64` binary
+
+  ```bash
+  wget -qO- https://github.com/mrf345/safelock/releases/latest/download/safelock-linux-arm64.tar.gz | tar xvz -C ~ && ~/safelock
+  ```
+
+  - Or from the source code
+
+    Make sure you have [go](https://go.dev/doc/install), [npm](https://nodejs.org/en/download/package-manager) and [git](https://git-scm.com/downloads) are installed, then run:
+
+    ```bash
+    go install github.com/wailsapp/wails/v2/cmd/wails@latest
+    git clone https://github.com/mrf345/safelock.git
+    cd safelock
+    wails dev
+    ```
+
+- ##### Windows
+
+  Download, extract and install [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-amd64.zip) or run [this portable version](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-portable-amd64.zip).
+
+- ##### MacOS
+
+  Download and extract [this universal .app](https://github.com/mrf345/safelock/releases/latest/download/safelock-darwin-universal.zip), Note that you'll need to enable installing apps from unknown developers follow [this guide](https://www.wikihow.com/Install-Software-from-Unsigned-Developers-on-a-Mac).
+
+
+### Performance
+
+The encryption should be about **19.5** times faster than `gpgtar` and **8.8** times faster than `7zip`. Check [safelock-cli/performance](https://github.com/mrf345/safelock-cli?tab=readme-ov-file#performance) for more details.
+
+<p align="center">
+  <a href="https://raw.githubusercontent.com/mrf345/safelock-cli/master/benchmark/encryption-time.webp" target="_blank">
+    <img src="https://raw.githubusercontent.com/mrf345/safelock-cli/master/benchmark/encryption-time.webp" alt="encryption time" />
+  </a>
+</p>
 
 
 ### Changelog
 
 ##### v1.0.0
 
-Should expect great improvement in performance (~6x) when compared to the last release 0.0.5, better overall encryption and cross-platform support.
+Should expect great improvement in performance (about **23.2** times faster) compared to the last release `0.5`, with better overall encryption and cross-platform support.
 
-Unfortunately this version breaks backward compatibility. Any files encrypted with a prior version can't be decrypted with this version, and vice versa.
+However, this version **breaks backward compatibility**. Any files encrypted with a prior versions can't be decrypted with this version, and vice versa.
 
-### Development
-
-- *Run tests*: `make test`
-- *Run style check*: `make lint`
-- *Compile binary*: `make pkg`
-
-
-### Demo
-
-![Demo](docs/demo.gif)
-
+<p align="center" style="margin-top: 60px;">
+  <a href="https://raw.githubusercontent.com/mrf345/safelock/master/docs/demo.gif" target="_blank">
+    <img src="docs/demo.gif" alt="demo" />
+  </a>
+</p>

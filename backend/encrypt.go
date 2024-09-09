@@ -1,12 +1,13 @@
-package main
+package backend
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/google/uuid"
-	slErrs "github.com/mrf345/safelock-cli/errors"
 	sl "github.com/mrf345/safelock-cli/safelock"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -18,6 +19,7 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 	}
 
 	var outputPath string
+	var outputFile *os.File
 	id = uuid.New().String()
 	ctx, cancel := context.WithCancel(a.ctx)
 
@@ -35,6 +37,12 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 		return "", err
 	}
 
+	if outputFile, err = os.OpenFile(outputPath, os.O_RDWR|os.O_CREATE, 0755); err != nil {
+		a.ShowErrMsg(fmt.Sprintf("Failure: %s", err.Error()))
+		cancel()
+		return
+	}
+
 	a.task.cancel = cancel
 	a.task.lock = sl.New()
 	a.task.lock.Quiet = true
@@ -42,14 +50,17 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 	a.task.kind = kindEncrypt
 
 	a.task.lock.StatusObs.
-		On(sl.EventStatusUpdate, a.updateStatus).
-		On(sl.EventStatusEnd, a.resetTask)
+		On(sl.StatusUpdate.Str(), a.updateStatus).
+		On(sl.StatusEnd.Str(), a.resetTask)
 
 	go func() {
-		if err = a.task.lock.Encrypt(ctx, paths, outputPath, password); err == nil {
+		if err = a.task.lock.Encrypt(ctx, paths, outputFile, password); err == nil {
 			a.ShowInfoMsg("All set, and encrypted!")
-		} else if _, cancelled := err.(*slErrs.ErrContextExpired); !cancelled {
+			outputFile.Close()
+		} else if !errors.Is(err, context.DeadlineExceeded) {
 			a.ShowErrMsg(fmt.Sprintf("Failure: %s", err.Error()))
+			outputFile.Close()
+			_ = os.Remove(outputFile.Name())
 		}
 	}()
 

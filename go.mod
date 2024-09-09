@@ -1,21 +1,23 @@
-module safelock
+module github.com/mrf345/safelock
 
 go 1.22
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/mrf345/desktop-entry v0.0.3
-	github.com/mrf345/safelock-cli v0.3.0
+	github.com/mrf345/desktop-entry v0.1.0
+	github.com/mrf345/safelock-cli v0.4.4
 	github.com/stretchr/testify v1.9.0
 	github.com/wailsapp/wails/v2 v2.9.1
 )
+
+replace github.com/wailsapp/wails/v2 => github.com/mrf345/wails/v2 v2.0.0-20240906143800-035eb7c1ed2c
 
 require (
 	github.com/GianlucaGuarini/go-observable v0.0.0-20171228155646-e39e699e0a00 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
-	github.com/bodgit/sevenzip v1.5.1 // indirect
+	github.com/bodgit/sevenzip v1.5.2 // indirect
 	github.com/bodgit/windows v1.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dsnet/compress v0.0.1 // indirect

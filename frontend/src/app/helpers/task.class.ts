@@ -15,7 +15,7 @@ export class Task {
 
   isRunning$ = this.id$.pipe(map(Boolean));
   notRunning$ = this.isRunning$.pipe(map(r => !r));
-  notComplete$ = this.percent$.pipe(map(p => "100" > p));
+  notComplete$ = this.percent$.pipe(map(p => 100 > parseFloat(p)));
   isCreated$ = combineLatest([this.kind$, this.files$])
     .pipe(map(([a, b]) => !!(a && b.length)));
   notCreated$ = this.isCreated$.pipe(map(c => !c));

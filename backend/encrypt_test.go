@@ -1,7 +1,8 @@
-package main
+package backend
 
 import (
 	"context"
+	"embed"
 	"os"
 	"path/filepath"
 	"testing"
@@ -69,7 +70,7 @@ func TestEncryptFail(t *testing.T) {
 }
 
 func getTestApp() *App {
-	app := NewApp()
+	app, _ := NewApp([]byte{}, embed.FS{})
 	app.ctx = context.Background()
 	return app
 }
@@ -90,7 +91,7 @@ func mockSaveFileDialog(path string, err error) {
 }
 
 func mockEventsEmit() chan string {
-	event := make(chan string, 2)
+	event := make(chan string, 10000)
 	EventsEmit = func(ctx context.Context, eventName string, optionalData ...interface{}) {
 		event <- eventName
 	}
