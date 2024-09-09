@@ -4,7 +4,7 @@ import { TitleCasePipe } from '@angular/common';
 
 import { LinkService, AppEvents } from './link.service';
 import { Task, TaskKind } from '../helpers/task.class'
-import { Encrypt, Decrypt, Cancel } from '../../../wailsjs/go/main/App';
+import { Encrypt, Decrypt, Cancel } from '../../../wailsjs/go/backend/App';
 
 
 @Injectable({

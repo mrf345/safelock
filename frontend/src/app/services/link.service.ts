@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { defer, from, Observable } from 'rxjs';
 
-import { GetVersion, ShowErrMsg } from '../../../wailsjs/go/main/App';
+import { GetVersion, ShowErrMsg } from '../../../wailsjs/go/backend/App';
 
 export enum AppEvents {
   statusUpdateKey = 'status_update',
