@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { LinkService } from './link.service';
 import { BehaviorSubject, from, Observable, tap } from 'rxjs';
 import { TitleCasePipe } from '@angular/common';
 
+import { LinkService, AppEvents } from './link.service';
 import { Task, TaskKind } from '../helpers/task.class'
 import { Encrypt, Decrypt, Cancel } from '../../../wailsjs/go/main/App';
 
-const statusUpdateKey = 'status_update';
-const statusEndKey = 'status_end';
 
 @Injectable({
   providedIn: 'root'
@@ -91,12 +89,12 @@ export class TaskService {
   }
 
   stopStatusUpdate() {
-    window?.runtime?.EventsOff(statusUpdateKey);
-    window?.runtime?.EventsOff(statusEndKey);
+    window?.runtime?.EventsOff(AppEvents.statusUpdateKey);
+    window?.runtime?.EventsOff(AppEvents.statusEndKey);
   }
 
   private startStatusUpdate() {
-    window?.runtime?.EventsOn(statusUpdateKey, (status: string, percent: string) => {
+    window?.runtime?.EventsOn(AppEvents.statusUpdateKey, (status: string, percent: string) => {
       this._task?.status$.next(status);
       this._task?.percent$.next(percent);
       this.linkService.setTitle(
@@ -104,7 +102,7 @@ export class TaskService {
         ` (${percent}%)`
       );
     });
-    window?.runtime?.EventsOn(statusEndKey, () => {
+    window?.runtime?.EventsOn(AppEvents.statusEndKey, () => {
       if (this._task.isCreated) {
         this.remove();
         this.done$.next(true);

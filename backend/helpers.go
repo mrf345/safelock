@@ -1,4 +1,4 @@
-package main
+package backend
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ func (a *App) updateStatus(status string, percent float64) {
 	a.task.status = status
 	a.task.percent = percent
 
-	if a.pacer.Ready() && percent > 0.0 {
+	if percent > 0.0 {
 		EventsEmit(
 			a.ctx,
 			statusUpdateKey,
@@ -29,7 +29,7 @@ func (a *App) resetTask() {
 func (a *App) offTaskHandlers() {
 	if a.task.lock != nil {
 		a.task.lock.StatusObs.
-			Off(sl.EventStatusUpdate, a.updateStatus).
-			Off(sl.EventStatusEnd, a.resetTask)
+			Off(sl.StatusUpdate.Str(), a.updateStatus).
+			Off(sl.StatusEnd.Str(), a.resetTask)
 	}
 }
