@@ -22,16 +22,10 @@
 <details>
 <summary><h5>Linux</h5></summary>
 
-  - With `amd64` binary
+  - With binaries
 
   ```bash
   wget -qO- https://github.com/mrf345/safelock/releases/latest/download/safelock-linux-amd64.tar.gz | tar xvz -C ~ && ~/safelock
-  ```
-
-  - With `arm64` binary
-
-  ```bash
-  wget -qO- https://github.com/mrf345/safelock/releases/latest/download/safelock-linux-arm64.tar.gz | tar xvz -C ~ && ~/safelock
   ```
 
   - Or from the source code
@@ -48,7 +42,7 @@
 <details>
 <summary><h5>Windows</h5></summary>
 
-  Download, extract and install [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-amd64.zip) or run [this portable version](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-portable-amd64.zip).
+  Download, extract and install [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-amd64.zip) or [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-arm64.zip) for `arm64` processors. If you want a portable version download [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-portable-amd64.zip) or [this](https://github.com/mrf345/safelock/releases/latest/download/safelock-windows-portable-arm64.zip) for `arm64`.
 
 </details>
 <details>
