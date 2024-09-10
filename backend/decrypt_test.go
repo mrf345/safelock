@@ -33,6 +33,7 @@ func TestDecrypt(t *testing.T) {
 
 	mockOpenDirectoryDialog(tempDir, nil)
 	mockEventsEmit()
+	mockWindowSetTitle()
 	dTypeChan := mockMessageDialog()
 	_, err := app.Decrypt(outputPath, pwd)
 	dialogType := <-dTypeChan
@@ -55,6 +56,7 @@ func TestDecryptFail(t *testing.T) {
 
 	mockOpenDirectoryDialog(tempDir, nil)
 	mockEventsEmit()
+	mockWindowSetTitle()
 	dTypeChan := mockMessageDialog()
 	_, err := app.Decrypt(outputPath, "wrong pass")
 	dialogType := <-dTypeChan

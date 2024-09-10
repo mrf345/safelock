@@ -37,7 +37,9 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 		return "", err
 	}
 
-	if outputFile, err = os.OpenFile(outputPath, os.O_RDWR|os.O_CREATE, 0755); err != nil {
+	fileFlags := os.O_RDWR | os.O_CREATE | os.O_TRUNC
+
+	if outputFile, err = os.OpenFile(outputPath, fileFlags, 0755); err != nil {
 		a.ShowErrMsg(fmt.Sprintf("Failure: %s", err.Error()))
 		cancel()
 		return
@@ -62,6 +64,8 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 			outputFile.Close()
 			_ = os.Remove(outputFile.Name())
 		}
+
+		WindowSetTitle(a.ctx, Name)
 	}()
 
 	return

@@ -63,6 +63,7 @@ func (a *App) Decrypt(path string, password string) (id string, err error) {
 		}
 
 		inputFile.Close()
+		WindowSetTitle(a.ctx, Name)
 	}()
 
 	return

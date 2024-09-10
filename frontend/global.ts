@@ -8,7 +8,6 @@ declare global {
       OnFileDrop(callback: (x: number, y: number, paths: string[]) => void, useDropTarget: boolean) :void
       OnFileDropOff(): void
       BrowserOpenURL(url: string): void
-      WindowSetTitle(title: string): void
     }
   }
 }
