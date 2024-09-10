@@ -132,8 +132,8 @@ github.com/mattn/go-isatty v0.0.19 h1:JITubQf0MOLdlGRuRq+jtsDlekdYPia9ZFsB8h/APP
 github.com/mattn/go-isatty v0.0.19/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/mholt/archiver/v4 v4.0.0-alpha.8 h1:tRGQuDVPh66WCOelqe6LIGh0gwmfwxUrSSDunscGsRM=
 github.com/mholt/archiver/v4 v4.0.0-alpha.8/go.mod h1:5f7FUYGXdJWUjESffJaYR4R60VhnHxb2X3T1teMyv5A=
-github.com/mrf345/desktop-entry v0.1.0 h1:3O0iGQEPZNY8w9NaLJBkAlwMcUzWVS+DSKj1/s/hqQU=
-github.com/mrf345/desktop-entry v0.1.0/go.mod h1:I05CBP5fSBv7fa3ImKWBY5+0DEpbPzzzih+5y1XaYag=
+github.com/mrf345/desktop-entry v0.2.0 h1:6RV6Rk1jpSngMtSvKgNL61mWbIRyAoczFheVn7diodE=
+github.com/mrf345/desktop-entry v0.2.0/go.mod h1:I05CBP5fSBv7fa3ImKWBY5+0DEpbPzzzih+5y1XaYag=
 github.com/mrf345/safelock-cli v0.4.4 h1:VpNNR2i2TzjfdKKAi/R0a0yZIL9UgxCizBMqhLABE/I=
 github.com/mrf345/safelock-cli v0.4.4/go.mod h1:5JSG/xryFFU2+lxaca6j5JlPq1YcBrhuJmxhEJtkMHM=
 github.com/mrf345/wails/v2 v2.0.0-20240906143800-035eb7c1ed2c h1:WNoJ0oF8O6uf+VsVf7AWBST9SMWHuBOb2+OC1m+7GaU=

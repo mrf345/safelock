@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/mrf345/desktop-entry v0.1.0
+	github.com/mrf345/desktop-entry v0.2.0
 	github.com/mrf345/safelock-cli v0.4.4
 	github.com/stretchr/testify v1.9.0
 	github.com/wailsapp/wails/v2 v2.9.1

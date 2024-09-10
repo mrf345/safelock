@@ -23,10 +23,6 @@ export class LinkService {
     window?.runtime?.BrowserOpenURL(url);
   }
 
-  setTitle(title: string) {
-    window?.runtime?.WindowSetTitle(title);
-  }
-
   removeDroppedListeners() {
     window?.runtime?.OnFileDropOff();
   }

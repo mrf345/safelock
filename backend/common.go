@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -11,27 +12,34 @@ import (
 )
 
 const (
-	Version         = "1.0.0"
-	Name            = "Safelock"
-	statusUpdateKey = "status_update"
-	statusEndKey    = "status_end"
-	openedSlaKey    = "opened_sla_file"
-	kindEncrypt     = "encrypt"
-	kindDecrypt     = "decrypt"
+	Version                  = "1.0.1"
+	Name                     = "Safelock"
+	statusUpdateKey          = "status_update"
+	statusEndKey             = "status_end"
+	openedSlaKey             = "opened_sla_file"
+	kindEncrypt     taskKind = "encrypt"
+	kindDecrypt     taskKind = "decrypt"
 )
+
+type taskKind string
+
+func (tk taskKind) Str() string {
+	return string(tk)
+}
 
 var (
 	MessageDialog       = runtime.MessageDialog
 	SaveFileDialog      = runtime.SaveFileDialog
 	OpenDirectoryDialog = runtime.OpenDirectoryDialog
 	EventsEmit          = runtime.EventsEmit
+	WindowSetTitle      = runtime.WindowSetTitle
 )
 
 type Task struct {
 	id      string
 	status  string
 	percent float64
-	kind    string
+	kind    taskKind
 	lock    *safelock.Safelock
 	cancel  context.CancelFunc
 }
@@ -45,7 +53,7 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) domReady(ctx context.Context) {
+func (a App) domReady(ctx context.Context) {
 	runtime.WindowCenter(ctx)
 
 	isSlaFileOpened := len(os.Args) > 1 && strings.HasSuffix(os.Args[1], ".sla")
@@ -59,11 +67,21 @@ func (a *App) domReady(ctx context.Context) {
 	}
 }
 
-func (a *App) GetVersion() string {
+func (a App) openFileForMac(path string) {
+	if !strings.HasSuffix(path, ".sla") {
+		a.ShowErrMsg(fmt.Sprintf("Unsupported file format (%s)", path))
+		return
+	}
+
+	EventsEmit(a.ctx, openedSlaKey, path)
+	runtime.WindowShow(a.ctx)
+}
+
+func (a App) GetVersion() string {
 	return Version
 }
 
-func (a *App) ShowErrMsg(msg string) {
+func (a App) ShowErrMsg(msg string) {
 	_, _ = MessageDialog(a.ctx, runtime.MessageDialogOptions{
 		Type:    runtime.ErrorDialog,
 		Title:   "😞 Failure",
@@ -71,7 +89,7 @@ func (a *App) ShowErrMsg(msg string) {
 	})
 }
 
-func (a *App) ShowInfoMsg(msg string) {
+func (a App) ShowInfoMsg(msg string) {
 	_, _ = MessageDialog(a.ctx, runtime.MessageDialogOptions{
 		Type:    runtime.InfoDialog,
 		Title:   "🎉 Success",
@@ -79,7 +97,7 @@ func (a *App) ShowInfoMsg(msg string) {
 	})
 }
 
-func (a *App) Cancel() {
+func (a App) Cancel() {
 	if len(a.task.id) > 0 {
 		a.task.cancel()
 	}

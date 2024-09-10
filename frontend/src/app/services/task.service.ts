@@ -73,7 +73,6 @@ export class TaskService {
   }
 
   cancel(): Observable<void> {
-    this.restoreDefaultTitle();
     return from(Cancel()).pipe(tap(() => this.remove()));
   }
 
@@ -81,7 +80,6 @@ export class TaskService {
     this.stopStatusUpdate();
     this._task = new Task();
     this.task$.next(this._task);
-    this.restoreDefaultTitle();
   }
 
   setPassword(pwd: string) {
@@ -97,10 +95,6 @@ export class TaskService {
     window?.runtime?.EventsOn(AppEvents.statusUpdateKey, (status: string, percent: string) => {
       this._task?.status$.next(status);
       this._task?.percent$.next(percent);
-      this.linkService.setTitle(
-        `${this.titleCase(this._task?.kind$.getValue())}ing` +
-        ` (${percent}%)`
-      );
     });
     window?.runtime?.EventsOn(AppEvents.statusEndKey, () => {
       if (this._task.isCreated) {
@@ -108,9 +102,5 @@ export class TaskService {
         this.done$.next(true);
       }
     });
-  }
-
-  private restoreDefaultTitle() {
-    this.linkService.setTitle('Safelock');
   }
 }

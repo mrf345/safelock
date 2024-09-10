@@ -84,12 +84,12 @@ jobs:
       - name: Build Windows NSIS installer (Normal)
         if: runner.os == 'Windows' && startsWith(matrix.build.tag, 'windows-a')
         shell: bash
-        run: wails build -platform ${{ matrix.build.platform }} -nsis -windowsconsole -ldflags "-X main.version=v${{ steps.normalize_version.outputs.version }}"
+        run: wails build -platform ${{ matrix.build.platform }} -nsis -ldflags "-X main.version=v${{ steps.normalize_version.outputs.version }}"
 
       - name: Build Windows NSIS installer (Portable)
         if: runner.os == 'Windows' && startsWith(matrix.build.tag, 'windows-portable')
         shell: bash
-        run: wails build -platform ${{ matrix.build.platform }} -nsis -ldflags "-X main.version=v${{ steps.normalize_version.outputs.version }} -X main.portablebuild=true" -windowsconsole
+        run: wails build -platform ${{ matrix.build.platform }} -nsis -ldflags "-X main.version=v${{ steps.normalize_version.outputs.version }} -X main.portablebuild=true"
 
       # Packaging
 

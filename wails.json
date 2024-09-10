@@ -9,5 +9,16 @@
   "author": {
     "name": "Mohamed Feddad",
     "email": "mrf345@gmail.com"
+  },
+  "info": {
+    "fileAssociations": [
+      {
+        "ext": "sla",
+        "name": "Safelock",
+        "description": "Safelock Encrypted File",
+        "iconName": "appicon",
+        "role": "Viewer"
+      }
+    ]
   }
 }

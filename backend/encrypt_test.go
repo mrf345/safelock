@@ -35,6 +35,7 @@ func TestEncrypt(t *testing.T) {
 
 	mockSaveFileDialog(outputPath, nil)
 	mockEventsEmit()
+	mockWindowSetTitle()
 	dTypeChan := mockMessageDialog()
 	_, err := app.Encrypt(inputs, pwd)
 	dialogType := <-dTypeChan
@@ -59,6 +60,7 @@ func TestEncryptFail(t *testing.T) {
 
 	mockSaveFileDialog(outputPath, nil)
 	mockEventsEmit()
+	mockWindowSetTitle()
 	dTypeChan := mockMessageDialog()
 	_, err := app.Encrypt(inputs, pwd)
 	dialogType := <-dTypeChan
@@ -94,4 +96,12 @@ func mockEventsEmit() chan string {
 		event <- eventName
 	}
 	return event
+}
+
+func mockWindowSetTitle() chan string {
+	titles := make(chan string, 10000)
+	WindowSetTitle = func(ctx context.Context, title string) {
+		titles <- title
+	}
+	return titles
 }
