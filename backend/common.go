@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -11,7 +12,7 @@ import (
 )
 
 const (
-	Version                  = "1.0.0"
+	Version                  = "1.0.1"
 	Name                     = "Safelock"
 	statusUpdateKey          = "status_update"
 	statusEndKey             = "status_end"
@@ -64,6 +65,16 @@ func (a App) domReady(ctx context.Context) {
 			runtime.WindowShow(ctx)
 		}()
 	}
+}
+
+func (a App) openFileForMac(path string) {
+	if !strings.HasSuffix(path, ".sla") {
+		a.ShowErrMsg(fmt.Sprintf("Unsupported file format (%s)", path))
+		return
+	}
+
+	EventsEmit(a.ctx, openedSlaKey, path)
+	runtime.WindowShow(a.ctx)
 }
 
 func (a App) GetVersion() string {

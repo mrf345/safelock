@@ -10,6 +10,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 	"github.com/wailsapp/wails/v2/pkg/options/linux"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 )
 
 func NewApp(icon []byte, assets embed.FS) (*App, *options.App) {
@@ -37,6 +38,7 @@ func NewApp(icon []byte, assets embed.FS) (*App, *options.App) {
 		AssetServer: &assetserver.Options{Assets: assets},
 		Bind:        []interface{}{app},
 		Linux:       &linux.Options{Icon: icon},
+		Mac:         &mac.Options{OnFileOpen: app.openFileForMac},
 		DragAndDrop: &options.DragAndDrop{
 			EnableFileDrop: true,
 		},
