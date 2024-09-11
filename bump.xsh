@@ -1,6 +1,6 @@
 import sys
 
-pre_version = "1.0.1"
+pre_version = "1.0.2"
 
 if 1 >= len(sys.argv) or sys.argv[1] == pre_version:
     raise Exception("need to pass new version")
