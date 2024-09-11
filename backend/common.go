@@ -2,7 +2,6 @@ package backend
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -45,36 +44,33 @@ type Task struct {
 }
 
 type App struct {
-	ctx  context.Context
-	task Task
+	ctx        context.Context
+	task       Task
+	openedWith string
 }
 
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a App) domReady(ctx context.Context) {
+func (a *App) domReady(ctx context.Context) {
+	var filePath string
+
 	runtime.WindowCenter(ctx)
 
-	isSlaFileOpened := len(os.Args) > 1 && strings.HasSuffix(os.Args[1], ".sla")
+	if len(a.openedWith) > 0 {
+		filePath = a.openedWith
+	} else if len(os.Args) > 1 {
+		filePath = os.Args[1]
+	}
 
-	if isSlaFileOpened {
+	if strings.HasSuffix(filePath, ".sla") {
 		go func() {
 			time.Sleep(time.Second / 3)
-			EventsEmit(ctx, openedSlaKey, os.Args[1])
+			EventsEmit(ctx, openedSlaKey, filePath)
 			runtime.WindowShow(ctx)
 		}()
 	}
-}
-
-func (a App) openFileForMac(path string) {
-	if !strings.HasSuffix(path, ".sla") {
-		a.ShowErrMsg(fmt.Sprintf("Unsupported file format (%s)", path))
-		return
-	}
-
-	EventsEmit(a.ctx, openedSlaKey, path)
-	runtime.WindowShow(a.ctx)
 }
 
 func (a App) GetVersion() string {
