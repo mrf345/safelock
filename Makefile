@@ -21,3 +21,6 @@ test-fe:
 lint:
 	golangci-lint run
 	npm --prefix frontend run lint
+
+bump:
+	xonsh bump.xsh $(v)
