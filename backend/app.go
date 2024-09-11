@@ -38,7 +38,9 @@ func NewApp(icon []byte, assets embed.FS) (*App, *options.App) {
 		AssetServer: &assetserver.Options{Assets: assets},
 		Bind:        []interface{}{app},
 		Linux:       &linux.Options{Icon: icon},
-		Mac:         &mac.Options{OnFileOpen: app.openFileForMac},
+		Mac: &mac.Options{
+			OnFileOpen: func(p string) { app.openedWith = p },
+		},
 		DragAndDrop: &options.DragAndDrop{
 			EnableFileDrop: true,
 		},
