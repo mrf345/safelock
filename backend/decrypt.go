@@ -49,14 +49,12 @@ func (a *App) Decrypt(path string, password string) (id string, err error) {
 	a.task.id = id
 	a.task.kind = kindDecrypt
 
-	a.task.lock.StatusObs.
-		On(sl.StatusUpdate.Str(), a.updateStatus).
-		On(sl.StatusEnd.Str(), a.resetTask)
+	a.task.lock.StatusObs.Subscribe(a.handleStatusUpdate)
 
 	go func() {
 		if err = a.task.lock.Decrypt(ctx, inputFile, outputPath, password); err == nil {
 			a.ShowInfoMsg("All set, and decrypted!")
-		} else if _, invalid := errors.Unwrap(err).(*slErrs.ErrFailedToAuthenticate); invalid {
+		} else if slErrs.Is[*slErrs.ErrFailedToAuthenticate](err) {
 			a.ShowErrMsg("Failure: invalid password or corrupted .sla file")
 		} else if !errors.Is(err, context.DeadlineExceeded) {
 			a.ShowErrMsg(fmt.Sprintf("Failure: %s", err.Error()))

@@ -1,4 +1,4 @@
-v ?= 1.0.2
+v ?= 1.1.0
 
 pkg-some:
 	wails build -platform windows/amd64,windows/arm64,linux/amd64

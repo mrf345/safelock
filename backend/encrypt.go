@@ -51,9 +51,7 @@ func (a *App) Encrypt(paths []string, password string) (id string, err error) {
 	a.task.id = id
 	a.task.kind = kindEncrypt
 
-	a.task.lock.StatusObs.
-		On(sl.StatusUpdate.Str(), a.updateStatus).
-		On(sl.StatusEnd.Str(), a.resetTask)
+	a.task.lock.StatusObs.Subscribe(a.handleStatusUpdate)
 
 	go func() {
 		if err = a.task.lock.Encrypt(ctx, paths, outputFile, password); err == nil {
