@@ -96,7 +96,7 @@ describe('HomeComponent', () => {
     component.taskService.remove()
     mockLinkService.files$.next(["temp/testing.txt"]);
     fixture.detectChanges();
-    component.password.setValue('123456789');
+    component.password.setValue('Abc$123456');
     fixture.detectChanges();
     helper.select<HTMLButtonElement>(runTaskBtnSelector)?.click();
     fixture.detectChanges();
@@ -124,7 +124,7 @@ describe('HomeComponent', () => {
     component.taskService.remove()
     mockLinkService.files$.next(["temp/testing.txt"]);
     fixture.detectChanges();
-    component.password.setValue('123456789');
+    component.password.setValue('Abcd$12345');
     fixture.detectChanges();
     helper.select<HTMLButtonElement>(runTaskBtnSelector)?.click();
     fixture.detectChanges();

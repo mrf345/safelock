@@ -91,7 +91,17 @@
                 </button>
             </div>
             <div class="invalid-feedback">
-                Requires a minimum of 8 characters
+                @if (password.hasError('minlength') || password.hasError('required')) {
+                    Requires minimum of {{ pwdMinLength }} characters
+                } @else if (password.hasError(pwdPtrKeys.hasLowerLetter)) {
+                    Requires lowercase letter (a, b, c...)
+                } @else if (password.hasError(pwdPtrKeys.hasUpperLetter)) {
+                    Requires uppercase letter (A, B, C...)
+                } @else if (password.hasError(pwdPtrKeys.hasNumber)) {
+                    Requires number (1, 2, 3...)
+                } @else if (password.hasError(pwdPtrKeys.hasSymbol)) {
+                    Requires symbol (!, $, #...)
+                }
             </div>
         </div>
     </ng-container>

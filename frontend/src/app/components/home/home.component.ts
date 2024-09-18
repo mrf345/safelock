@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { filter, mergeMap, Subscription, zip } from 'rxjs';
 
 import { LinkService } from '../../services/link.service';
 import { TaskService } from '../../services/task.service';
+import { getPwdControl, pwdPatternKeys  } from '../../helpers/getPasswordFormControl.function';
 
 
 @Component({
@@ -16,16 +17,12 @@ import { TaskService } from '../../services/task.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   readonly subs = new Subscription();
-  readonly password = new FormControl('', {
-      validators: [
-        Validators.minLength(8),
-        Validators.required,
-      ],
-      updateOn: 'change',
-  });
+  readonly pwdMinLength = 8;
+  readonly pwdPtrKeys = pwdPatternKeys
+  readonly password = getPwdControl(this.pwdMinLength);
 
   @ViewChild('passwordInput', {}) set passwordInput(input: ElementRef) {
-    if (input) input.nativeElement.focus();
+    if (input) setTimeout(() => input.nativeElement.focus(), 1);
   }
 
   constructor(
