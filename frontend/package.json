@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "node --no-deprecation node_modules/jest/bin/jest",
+    "test": "jest jest --clearCache && node --no-deprecation node_modules/jest/bin/jest",
     "test:watch": "node --no-deprecation node_modules/jest/bin/jest --watch",
     "lint": "ng lint"
   },

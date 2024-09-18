@@ -48,14 +48,15 @@
 <details>
 <summary><h5>MacOS</h5></summary>
 
-  Download and extract [this universal .app](https://github.com/mrf345/safelock/releases/latest/download/safelock-darwin-universal.zip), Note that you'll need to enable installing apps from unknown developers follow [this guide](https://www.wikihow.com/Install-Software-from-Unsigned-Developers-on-a-Mac).
+  Download and run [this universal .app](https://github.com/mrf345/safelock/releases/latest/download/safelock-darwin-universal.zip), Note that you'll need to enable running apps from unknown developers follow [this guide](https://www.wikihow.com/Install-Software-from-Unsigned-Developers-on-a-Mac).
 
 </details>
 
 
 ### Performance
 
-The encryption should be about **19.5** times faster than `gpgtar` and **8.8** times faster than `7zip`. Check [safelock-cli/performance](https://github.com/mrf345/safelock-cli?tab=readme-ov-file#performance) for more details.
+> ![NOTE]
+> Check [safelock-cli/performance](https://github.com/mrf345/safelock-cli?tab=readme-ov-file#performance) for more detailed benchmarks.
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/mrf345/safelock-cli/master/benchmark/encryption-time.webp" target="_blank">
@@ -63,8 +64,14 @@ The encryption should be about **19.5** times faster than `gpgtar` and **8.8** t
   </a>
 </p>
 
+<p align="center">
+  <a href="https://raw.githubusercontent.com/mrf345/safelock-cli/master/benchmark/decryption-time.webp" target="_blank">
+    <img src="https://raw.githubusercontent.com/mrf345/safelock-cli/master/benchmark/decryption-time.webp" alt="decryption time" />
+  </a>
+</p>
 
-### Changelog
+
+### Breaking changes
 
 ##### v1.0.0
 
@@ -72,6 +79,8 @@ Should expect great improvement in performance (about **23.2** times faster) com
 
 However, this version **breaks backward compatibility**. Any files encrypted with a prior versions can't be decrypted with this version, and vice versa.
 
-<a style="margin-top: 60px;" href="https://raw.githubusercontent.com/mrf345/safelock/master/docs/demo.gif" target="_blank">
-  <img src="docs/demo.gif" alt="demo" />
-</a>
+<p style="margin-top: 35px;">
+  <a href="https://raw.githubusercontent.com/mrf345/safelock/master/docs/demo.gif" target="_blank">
+    <img src="docs/demo.gif" alt="demo" />
+  </a>
+</p>

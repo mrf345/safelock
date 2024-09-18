@@ -12,7 +12,7 @@ pkg:
 	upx build/bin/safelock-$(v)
 
 test:
-	go test ./... -count=2
+	go clean -testcache && go test ./... -count=2
 	npm --prefix frontend test
 
 test-fe:
