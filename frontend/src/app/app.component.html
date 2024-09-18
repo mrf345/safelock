@@ -1,24 +1,4 @@
 <ng-container class="app-container">
-  <div class="header d-flex justify-content-between px-3 pt-2">
-    <button
-     class="btn d-flex align-items-center"
-     data-access="dark-mode-btn"
-     [class.btn-light]="!themeService.inDarkMode"
-     [class.active]="themeService.inDarkMode"
-     (click)="themeService.toggleDarkMode()"
-    >
-      <ng-icon name="matVisibilityRound" />
-    </button>
-    <button
-     class="btn d-flex align-items-center"
-     data-access="about-btn"
-     [class.btn-light]="!themeService.inDarkMode"
-     [class.active]="inAbout"
-     [routerLink]="inAbout ? ['/home'] : ['/about']"
-    >
-      <ng-icon name="matQuestionMarkRound" />
-    </button>
-  </div>
-
-  <router-outlet class="content"></router-outlet>
+  <app-header></app-header>
+  <router-outlet></router-outlet>
 </ng-container>
