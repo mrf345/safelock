@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/google/uuid v1.3.0
 	github.com/mrf345/desktop-entry v0.2.0
-	github.com/mrf345/safelock-cli v0.4.4
+	github.com/mrf345/safelock-cli v0.6.0
 	github.com/stretchr/testify v1.9.0
 	github.com/wailsapp/wails/v2 v2.9.1
 )
@@ -13,7 +13,6 @@ require (
 replace github.com/wailsapp/wails/v2 => github.com/mrf345/wails/v2 v2.0.0-20240906143800-035eb7c1ed2c
 
 require (
-	github.com/GianlucaGuarini/go-observable v0.0.0-20171228155646-e39e699e0a00 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/bep/debounce v1.2.1 // indirect
 	github.com/bodgit/plumbing v1.3.0 // indirect
@@ -56,11 +55,11 @@ require (
 	github.com/wailsapp/go-webview2 v1.0.10 // indirect
 	github.com/wailsapp/mimetype v1.4.1 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
+	golang.org/x/crypto v0.27.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/term v0.23.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/term v0.24.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
