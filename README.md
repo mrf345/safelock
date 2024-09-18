@@ -55,7 +55,7 @@
 
 ### Performance
 
-> ![NOTE]
+> [!NOTE]
 > Check [safelock-cli/performance](https://github.com/mrf345/safelock-cli?tab=readme-ov-file#performance) for more detailed benchmarks.
 
 <p align="center">
